@@ -1,99 +1,58 @@
 package exercises.exercise19;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.function.Consumer;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.BeforeEach;
+
+import static org.junit.Assert.*;
 
 public class OptionalTest {
-	// Optional<String> opt;
+	Optional<String> opt;
 
-	// @Nested
-	// class WhenEmpty {
-	// 	@BeforeEach
-	// 	void setUp() {
-	// 		opt = Optional.of(null);
-	// 	}
+	@BeforeEach
+	void setUp() {
+		opt = Optional.of("foo");
+	}
 
-	// 	@Test
-	// 	void ofNotNull() {
-	// 		assertNotNull(opt);
-	// 	}
+	@Test
+	void ofOK() {
+		assertNotNull(opt);
+		assertEquals("foo", opt.orElse(""));
+	}
 
-	// 	// @Test
-	// 	// void ofNull() {
-	// 	// assertSame(Optional.EMPTY, opt);
-	// 	// }
+	@Test
+	void ofNull() {
+		assertSame(Optional.EMPTY, Optional.of(null));
+	}
 
-	// 	@Test
-	// 	void orElseWithEmptyOptional() {
-	// 		assertEquals("bar", opt.orElse("bar"));
-	// 	}
+	@Test
+	void orElse() {
+		assertEquals("bar", Optional.of(null).orElse("bar"));
+	}
 
-	// 	@Test
-	// 	void isPresentEmpty() {
-	// 		assertFalse(opt.isPresent());
-	// 	}
+	@Test
+	void isPresentOk() {
+		assertTrue(opt.isPresent());
+	}
 
-	// 	@Test
-	// 	void ifPresentWhenEmpty() {
-	// 		Consumer<String> cons = Mockito.mock(Consumer.class);
-	// 		opt.ifPresent(cons);
-	// 		Mockito.verify(cons, Mockito.never()).accept(Mockito.anyString());
-	// 	}
-	// }
+	@Test
+	void isPresentEmpty() {
+		assertFalse(Optional.of(null).isPresent());
+	}
 
-	// @Nested
-	// class WhenNotEmpty {
-	// 	@BeforeEach
-	// 	void setUp() {
-	// 		opt = Optional.of("foo");
-	// 	}
+	@Test
+	void map() {
+		final Optional<Integer> opt2 = opt.map(v -> v.length());
 
-	// 	@Test
-	// 	void ofNotNull() {
-	// 		assertNotNull(opt);
-	// 	}
+		assertNotNull(opt2);
+		assertEquals(java.util.Optional.of(3), opt2.orElse(0));
+	}
 
-	// 	@Test
-	// 	void isPresentOk() {
-	// 		assertTrue(opt.isPresent());
-	// 	}
+	@Test
+	void mapNull() {
+		final Optional<Integer> opt2 = Optional.of((String) null).map(v -> v.length());
 
-	// 	@Test
-	// 	void orElseOKNotEmpty() {
-	// 		assertEquals("foo", opt.orElse(""));
-	// 	}
-
-	// 	@Test
-	// 	void ifPresentWhenNotEmpty() {
-	// 		Consumer<String> cons = Mockito.mock(Consumer.class);
-	// 		opt.ifPresent(cons);
-	// 		Mockito.verify(cons, Mockito.times(1)).accept("foo");
-	// 	}
-
-	// 	@Test
-	// 	void map() {
-	// 		final Optional<Integer> opt2 = opt.map(v -> v.length());
-	// 		assertNotNull(opt2);
-	// 		assertEquals(3, opt2.orElse(0));
-	// 	}
-
-	// 	@Test
-	// 	void mapNull() {
-	// 		final Optional<Integer> opt2 = Optional.of((String) null).map(v ->
-	// 		v.length());
-
-	// 		assertNotNull(opt2);
-	// 		// assertSame(Optional.EMPTY, opt2);
-	// 		assertEquals(0, opt2.orElse(0));
-	// 	}
-	// }
+		assertNotNull(opt2);
+		assertSame(Optional.EMPTY, opt2);
+		assertEquals(java.util.Optional.of(0), opt2.orElse(0));
+	}
 }
