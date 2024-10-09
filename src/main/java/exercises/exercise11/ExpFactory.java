@@ -1,22 +1,21 @@
 package exercises.exercise11;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class ExpFactory {
+	Map<String, Supplier<ArithmExp>> map;
+
+	public ExpFactory() {
+		map = Map.of("mult", () -> new Mult(),
+				"plus", () -> new Plus(),
+				"min", () -> new Min(),
+				"mod", () -> new Mod());
+	}
+
 	public Optional<ArithmExp> createExp(final String exp) {
-		if("mult".equals(exp)) {
-			return Optional.of(new Mult());
-		}
-		if("plus".equals(exp)) {
-			return Optional.of(new Plus());
-		}
-		if("min".equals(exp)) {
-			return Optional.of(new Min());
-		}
-		if("mod".equals(exp)) {
-			return Optional.of(new Mod());
-		}
-		return Optional.empty();
+		return Optional.ofNullable(map.getOrDefault(exp, () -> null).get());
 	}
 }
 
