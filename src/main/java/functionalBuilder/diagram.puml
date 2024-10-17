@@ -1,0 +1,50 @@
+@startuml
+
+class Arbre {
+    #age: int
+    #taille: int
+    +Arbre(age: int, taille: int)
+}
+
+class Chene {
+    -feuilles: bool
+    +Chene(age: int, taille: int, feuilles: bool)
+}
+
+Chene --|> Arbre
+
+class  Pin {
+    -cones: int
+    +Pin(age: int, taille: int, cones: int)
+}
+
+Pin --|> Arbre
+
+class ArbreBuilder {
+    #age: int
+    #taille: int
+    +ArbreBuilder()
+    +setAge(age: int): this
+    +setTaille(taille: int): this
+    +build(): Arbre
+}
+
+class CheneBuilder {
+    -feuilles: bool
+    +CheneBuilder()
+    +setFeuilles(feuilles: bool): CheneBuilder
+    +build(): Chene
+}
+
+CheneBuilder --|> ArbreBuilder
+
+class PinBuilder {
+    -cones: int
+    +PinBuilder()
+    +setCones(cones: int): PinBuilder
+    +build(): Pin
+}
+
+PinBuilder --|> ArbreBuilder
+
+@enduml

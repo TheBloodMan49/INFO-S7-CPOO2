@@ -1,0 +1,34 @@
+@startuml
+
+class RobotFactory {
+    +newRobot(): RobotReleased
+}
+
+interface RobotReleased {
+    +press(x: int, y: int): RobotPressed
+    +click(x: int, y: int): RobotPressed
+    +type(line: str): RobotReleased
+    +execute(func: Runnable): RobotReleased
+}
+
+interface RobotPressed {
+    +release(): RobotReleased
+    +type(line: str): RobotPressed
+    +execute(func: Runnable): RobotPressed
+}
+
+interface Robot {
+    +type(line: str): Robot
+    +execute(func: Runnable): Robot
+}
+note right of RobotPressed
+ Using Java, we have to overload the methods to return the correct type.
+ In TypeScript, we can use the `this` type to return the type of the current object.
+end note
+
+
+
+RobotReleased --|> Robot
+RobotPressed --|> Robot
+
+@enduml
