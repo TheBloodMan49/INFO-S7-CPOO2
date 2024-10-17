@@ -1,0 +1,26 @@
+@startuml
+skinparam groupInheritance 2
+
+interface Action {
+    +execute() : void
+}
+
+class DnD2DrawRectangle {
+    +execute() : void
+}
+
+DnD2DrawRectangle -up-|> Action
+
+class SelectRectangleMode {
+    +execute() : void
+}
+
+SelectRectangleMode -up-|> Action
+
+class ActionComposite {
+    +execute() : void
+}
+
+ActionComposite -up-|> Action
+ActionComposite -down- "*" Action : actions
+@enduml
