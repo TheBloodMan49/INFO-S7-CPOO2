@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ProductsFactory implements ProductFactoryAbs {
+public class ProductsFactoryB implements ProductFactoryAbs {
 	public P1 createP1() {
 		return new P1();
 	}
